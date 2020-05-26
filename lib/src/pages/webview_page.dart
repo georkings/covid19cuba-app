@@ -33,7 +33,7 @@ class WebViewPageState extends State<WebViewPage>
     var json = PrefService.getString(Constants.prefPesquisador) ??
         Constants.defaultPesquisador;
     var data = PesquisadorModel.fromJson(jsonDecode(json));
-    webView = WebView(
+    var webView2 = WebView(
       initialUrl: data.url,
       javascriptMode: JavascriptMode.unrestricted,
       onPageFinished: (_) {
@@ -70,6 +70,7 @@ class WebViewPageState extends State<WebViewPage>
         controller = webViewController;
       },
     );
+    webView = webView2;
   }
 
   @override
@@ -94,25 +95,7 @@ class WebViewPageState extends State<WebViewPage>
         }
         return true;
       },
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          title: Text(Constants.appName),
-          centerTitle: true,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.refresh),
-              onPressed: () {
-                if (controller != null) {
-                  controller.reload();
-                }
-              },
-            ),
-          ],
-        ),
-        drawer: HomeDrawerWidget(),
-        body: webView,
-      ),
+      child: webView,
     );
   }
 }
